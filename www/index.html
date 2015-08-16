@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        
+<!-- Include jQuery Mobile stylesheets -->
+<link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css">
+
+<!-- Include the jQuery library -->
+<script src="js/jquery-1.11.3.min.js"></script>
+
+<!-- Include the jQuery Mobile library -->
+<script src="js/jquery.mobile-1.4.5.min.js"></script>
+
+<style>
+@-webkit-keyframes example {
+    0% {opacity:1;}
+    50% {opacity:0;}
+	100% {opacity:1;}
+}
+@keyframes example {
+    0% {opacity:1;}
+    50% {opacity:0;}
+	100% {opacity:1;}
+}
+body
+{
+	background-color:#FFF;
+}
+#options
+{
+	background:radial-gradient( rgba(255,255,255,1), rgba(204,204,204,1));
+}
+#intro
+{
+	background:radial-gradient(rgba(0,153,255,1), rgba(0,51,153,1));
+}
+.face
+{
+	position:relative;
+	width:300px;
+	height:300px;
+	padding:30px;
+}
+.square
+{
+	position:absolute;
+	width:100px;
+	height:100px;
+	border:#000 5px solid;
+}
+#initializing
+{
+	-webkit-animation:example 1.4s infinite;
+	animation:example 1.4s infinite;
+}
+	
+</style>
+        <title>Hello World</title>
+    </head>
+    <body>
+    
+<!--intro page-->
+        <div data-role="page" id="intro" style="background-color:#039; color:#fff;margin-left:auto; margin-right:auto;">
+
+  <div data-role="main" class="ui-content">
+  <center>
+<img src="img/logo.png" style="padding-top:100px" />
+    <h1>CubeStormer</h1>
+    Created by Yuvraj Singh Bawa<br>
+<br>
+
+    <div id="initializing">Initializing...</div>
+    
+    </center>
+    <div id="proceed"><a href="#options"><button>Proceed</button></a></div>
+  </div>
+  
+</div> 
+
+<!--intro page end-->
+
+<!--options-->
+        <div data-role="page" id="options">
+
+  <div data-role="main" class="ui-content">
+  <center>
+<div id="auto"><br>
+
+    <h1>Auto Mode</h1>
+    <img src="img/auto-mode.png">
+<br>    
+</div>
+<div id="manual" style="display:none"><br>
+
+    <h1>Manual Mode</h1>
+    <img src="img/manual-mode.png">
+<br>    
+</div>
+ <button id="auto-button" onClick="select_mode()">Select</button>
+ <u><a id="misc-text" onClick="modes()">Other modes</a></u>
+    </center>
+   
+  </div>
+  
+</div> 
+
+<!-- options end-->
+
+<!--auto mode-->
+        <div data-role="page" id="auto_page">
+
+  <div data-role="main" class="ui-content">
+  <center>
+<button onclick="capturePhoto();">Capture Photo</button>
+<img style="display:none;width:300px;height:300px;" id="largeImage" src="" />
+    <canvas id="picture" width="300px" height="300px"></canvas>
+    <div id="result"></div>
+    </center>
+   
+  </div>
+  
+</div> 
+
+<!-- auto mode end-->
+
+<!--manual mode-->
+        <div data-role="page" id="manual_page">
+
+  <div data-role="main" class="ui-content">
+  <center>
+<b>U: </b><input type="text" id="U-face">
+<br>
+<b>R: </b><input type="text" id="R-face">
+<br>
+<b>F: </b><input type="text" id="F-face">
+<br>
+<b>D: </b><input type="text" id="D-face">
+<br>
+<b>L: </b><input type="text" id="L-face">
+<br>
+<b>B: </b><input type="text" id="B-face"><br>
+<button id="manual-input-done" onClick="manual_input_text()">Done</button>
+<div id="manual_solution"></div>
+    </center>
+   
+  </div>
+  
+</div> 
+
+<!-- manual mode end-->
+
+<!--first page-->
+    <div data-role="page" id="pageone">
+
+  <div data-role="main" class="ui-content">
+        <div id="cube">
+    </div>
+    <form>
+    <input type="text" id="cube_orientation">
+    <input type="button" onClick="initialize()" value="Start!" >
+    <input type="button" onClick="prev()" value="Previous face">
+    <div id="face-name"></div>
+    <input type="button" onClick="next()" value="Next face">
+    </form>
+    <form>
+    <input type="button" id="blah" value="Blah!">
+    </form>
+                <p id="blah"></p>
+                <p id="solution"></p>
+  </div>
+
+  <div data-role="footer">
+    <h1>Footer Text</h1>
+  </div>
+</div> 
+
+ <script src="cordova.js"></script>
+        <script src="cube.js"></script>
+        <script>
+		 var curr_mode='auto';
+ function modes()
+ {
+	 if(curr_mode=='auto')
+	 {
+		 curr_mode='manual';
+		 $('#auto').hide(400);
+		 $('#manual').show(400);
+		 document.getElementById('misc-text').innerHTML='Back';
+	 }
+	 else
+	 {
+		 curr_mode='auto';
+		 $('#manual').hide(400);
+		 $('#auto').show(400);		 
+		 document.getElementById('misc-text').innerHTML='Other modes';
+	 }
+ }
+ 	function select_mode()
+	{
+		if(curr_mode=='auto')
+	$("body").pagecontainer("change", "#auto_page");		
+	else
+	$("body").pagecontainer("change", "#manual_page");
+	}
+	</script>
+        <script src="js/core_solver.js">
+        </script>
+        
+        <script src="js/camera_module.js"></script>
+        <script src="js/img_processing_module.js"></script>
+    </body>
+</html>
