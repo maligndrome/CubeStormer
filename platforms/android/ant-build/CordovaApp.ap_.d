@@ -43,16 +43,12 @@ C:\Users\rajayuv\cubestormer\platforms\android\assets\www\css\jquery.mobile-1.4.
 C:\Users\rajayuv\cubestormer\platforms\android\assets\www\img\auto-mode.png \
 C:\Users\rajayuv\cubestormer\platforms\android\assets\www\img\logo.png \
 C:\Users\rajayuv\cubestormer\platforms\android\assets\www\img\manual-mode.png \
-C:\Users\rajayuv\cubestormer\platforms\android\assets\www\js\async.js \
 C:\Users\rajayuv\cubestormer\platforms\android\assets\www\js\camera_module.js \
 C:\Users\rajayuv\cubestormer\platforms\android\assets\www\js\core_solver.js \
 C:\Users\rajayuv\cubestormer\platforms\android\assets\www\js\cube.js \
 C:\Users\rajayuv\cubestormer\platforms\android\assets\www\js\img_processing_module.js \
-C:\Users\rajayuv\cubestormer\platforms\android\assets\www\js\index.js \
 C:\Users\rajayuv\cubestormer\platforms\android\assets\www\js\jquery-1.11.3.min.js \
 C:\Users\rajayuv\cubestormer\platforms\android\assets\www\js\jquery.mobile-1.4.5.min.js \
-C:\Users\rajayuv\cubestormer\platforms\android\assets\www\js\solve.js \
-C:\Users\rajayuv\cubestormer\platforms\android\assets\www\js\worker.js \
 C:\Users\rajayuv\cubestormer\platforms\android\assets\www\plugins\org.apache.cordova.camera \
 C:\Users\rajayuv\cubestormer\platforms\android\assets\www\plugins\org.apache.cordova.camera\www \
 C:\Users\rajayuv\cubestormer\platforms\android\assets\www\plugins\org.apache.cordova.camera\www\Camera.js \

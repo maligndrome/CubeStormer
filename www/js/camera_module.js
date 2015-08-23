@@ -62,10 +62,15 @@ largeImage.crossOrigin = 'anonymous';
     // A button will call this function
     //
     function capturePhoto() {
+		var context=document.getElementById('picture').getContext('2d');
       // Take picture using device camera and retrieve image as base64-encoded string
       navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50,
-        destinationType: destinationType.DATA_URL,targetWidth: 500 });
-    }
+       destinationType: destinationType.DATA_URL,targetWidth: 500 });
+   /* var imageObj = new Image();
+imageObj=document.getElementById('xlarge');
+        context.drawImage(imageObj, 0, 0, 300, 300);
+		doit();*/
+	}
 
     // A button will call this function
     //

@@ -33,6 +33,11 @@ function solve(y){
 		console.log(initialcube);
 Cube.solveCube(initialcube,function(x){document.getElementById('manual_solution').innerHTML=x;});
 	}
+	else if(y=='automatic')
+	{
+		console.log(initialcube);
+Cube.solveCube(initialcube,function(x){document.getElementById('result').innerHTML=x;});
+	}
 }
 			function colortoString(str)
 			{

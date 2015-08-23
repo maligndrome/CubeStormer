@@ -1,7 +1,7 @@
-
+var capturedFaces=0;
 var context=document.getElementById('picture').getContext('2d');
 	var _max_label;
-
+var _cube='';
 		//},false);
 //loadCanvas("xlarge.png");
 function unique(arr){
@@ -24,31 +24,40 @@ function unique(arr){
 var blob;
 function doit()
 {
-	var centroids = new Object;
-	var final_list = new Object;
-	final_list[0]=[];
-	final_list[1]=[];
-	final_list[2]=[];
-	final_list[3]=[];
-	final_list[4]=[];
-	final_list[5]=[];
+	var centroids = new Array;
+	var final_list = new Array;
 	var count=0,color_count=0;
 	var colours=['red','green','blue','white','yellow','orange'];
+	var colourString='rgbwyo';
 	while(count<9&&color_count<6)
 	{
 	blob=FindBlobs(context.getImageData(0,0,document.getElementById('picture').width,document.getElementById('picture').height),colours[color_count]);
 	console.log(colours[color_count]);
 	centroids=matMax(blob);
-	final_list[color_count]=centroids;
-	count+=centroids[0].length;
+	for(var t=0;t<centroids.length;t++)
+	final_list[centroids[t]-1]=colourString[color_count];
+	console.log(colourString[color_count]);
+	count+=centroids.length;
 	++color_count;
 	}
-	console.log(final_list);
-	if(count==9)
-	document.getElementById('result').innerHTML="GREAT!";
+	final_list=String(final_list).replace(/,/g, ''); // results in 'b'
+		if(count==9)
+		{
+			++capturedFaces;
+			_cube+=final_list;
+			//console.log(_cube);
+			if(capturedFaces!=6)
+	document.getElementById('result').innerHTML=_cube;
+		else
+		{
+			initialcube=_cube;
+			solve('automatic');
+		}
+		}
 	else
-	document.getElementById('result').innerHTML="Okayish"+count;
+	document.getElementById('result').innerHTML="Try Again! "+count+" "+final_list;
 }
+
 
 function ColorTheBlobs(dst,blobs,colors){
     var xSize = dst.width,
@@ -155,18 +164,18 @@ function FindBlobs(src,color) {
 
         // We're only looking at the alpha channel in this case but you can
         // use more complicated heuristics
-		if(color=='red')
-        isVisible = (hsv_pixel[0]>350||hsv_pixel[0]<10)&&hsv_pixel[1]>0.5&&hsv_pixel[2]>0.5;
+				if(color=='red')
+        isVisible = (hsv_pixel[0]>350||hsv_pixel[0]<10)&&hsv_pixel[1]>0.5&&hsv_pixel[2]>0.2;
 		else if(color=='blue')
-        isVisible = (hsv_pixel[0]>220&&hsv_pixel[0]<260)&&hsv_pixel[1]>0.5&&hsv_pixel[2]>0.5;
+        isVisible = (hsv_pixel[0]>220&&hsv_pixel[0]<260)&&hsv_pixel[1]>0.5&&hsv_pixel[2]>0.2;
 		else if(color=='yellow')
-        isVisible = (hsv_pixel[0]>50&&hsv_pixel[0]<70)&&hsv_pixel[1]>0.5&&hsv_pixel[2]>0.5;
+        isVisible = (hsv_pixel[0]>40&&hsv_pixel[0]<70)&&hsv_pixel[1]>0.5&&hsv_pixel[2]>0.2;
 		else if(color=='orange')
-        isVisible = (hsv_pixel[0]>10&&hsv_pixel[0]<40)&&hsv_pixel[1]>0.5&&hsv_pixel[2]>0.5;
+        isVisible = (hsv_pixel[0]>10&&hsv_pixel[0]<40)&&hsv_pixel[1]>0.5&&hsv_pixel[2]>0.2;
 		else if(color=='white')
-        isVisible = hsv_pixel[1]<0.5&&hsv_pixel[2]>0.5;
+        isVisible = hsv_pixel[1]<0.5&&hsv_pixel[2]>0.2;
 		else
-        isVisible = (hsv_pixel[0]>100&&hsv_pixel[0]<150)&&hsv_pixel[1]>0.4&&hsv_pixel[2]>0.4;
+        isVisible = (hsv_pixel[0]>100&&hsv_pixel[0]<180)&&hsv_pixel[1]>0.4&&hsv_pixel[2]>0.2;
         if( isVisible ){
           // Find the lowest blob index nearest this pixel
           nw = blobMap[y-1][x-1] || 0;
@@ -304,6 +313,8 @@ histogram.sort(function (a, b)
 	}
 	}
 	var _break=false;
+	var q=0;
+	var data=new Array;
 	for(var k=0;k<common.length;k++)
 	{
 		_break=false;
@@ -313,10 +324,12 @@ histogram.sort(function (a, b)
 	{
 		if(matrix[i][j]==common[k])
 		{
-		var virtual_square=Math.sqrt(histogram_memoized[common[k]]);
-		centroid_y[centroid_i]=i+virtual_square;
-		centroid_x[centroid_i]=j+virtual_square;
-		centroid_i+=1;
+		//var virtual_square=Math.sqrt(histogram_memoized[common[k]]);
+		centroid_y=Math.floor((i+20)/100);
+		centroid_x=Math.ceil((j+20)/100);
+		data[q]=centroid_y*3+centroid_x;
+		console.log(data[q]);
+		q++
 		_break=true;
 		break;
 		}
@@ -325,9 +338,5 @@ histogram.sort(function (a, b)
 	break;
 	}
 	}
-	var centroids=new Object;
-	centroids[0]=centroid_y;
-	centroids[1]=centroid_x;
-	return centroids;
-	
+	return data;
 }
